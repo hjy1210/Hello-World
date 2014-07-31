@@ -1,6 +1,6 @@
 bksCompare<-function(itemsa,itemsb,pdf=FALSE,shift=TRUE) {
-  namea <- deparse(substitute(itemsa))
-  nameb <- deparse(substitute(itemsb))
+  namea <- gsub("[[:punct:]]","",deparse(substitute(itemsa)))
+  nameb <- gsub("[[:punct:]]","",deparse(substitute(itemsb)))
   forma<-getBks(itemsa)  #forma are bks extracted from itemsa
   formb<-getBks(itemsb)
   if (pdf==TRUE){

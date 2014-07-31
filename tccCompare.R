@@ -1,6 +1,6 @@
 tccCompare<-function(itemsa,scoresa,itemsb,scoresb,xpoints,mainprepend=""){
-  laba <- deparse(substitute(itemsa))
-  labb <- deparse(substitute(itemsb))
+  laba <- gsub("[[:punct:]]","",deparse(substitute(itemsa)))
+  labb <- gsub("[[:punct:]]","",deparse(substitute(itemsb)))
   cairo_pdf(paste(mainprepend,laba,"-VS-",labb,".pdf",sep=""),family="MingLiu")
   par(mfrow=c(2,1))
   tccitemsa<-tcc(itemsa,scoresa,xpoints)

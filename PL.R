@@ -11,7 +11,7 @@ PL<-function(name,a,bk,lg) {
   ck<- -bk[1]*a
   g<-1/(1+exp(-lg))
   ncat<-2
-  res<-list(name=name,nfac=1,itemtype=1,ncat=ncat,a=a,ck=ck,bk=bk,g=g,pdf=pdf)
+  res<-list(name=name,nfac=1,itemtype=1,ncat=ncat,a=a,ck=ck,bk=bk,lg=lg,pdf=pdf)
   class(res)<-"uirt"
   res
 }

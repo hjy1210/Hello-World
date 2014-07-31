@@ -10,7 +10,7 @@ rItems<-function(items,thetas){
   # 第i元素代表學生i在item 的反應類別
   if (item$itemtype==3 || item$itemtype==2 || item$itemtype==1)
       prob<-item$pdf(thetas)
-  else stop("only implement gr and gpc")
+  else stop("only implement 3PL, gr and gpc")
   apply(prob,1,function(x) {
       s<-cumsum(x)
       rnd<-runif(1)

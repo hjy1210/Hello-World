@@ -1,5 +1,5 @@
 CreateCCmds<-function(datafile,GroupNames=NULL,Positions=NULL,responses,constraints="none",
-                      fit="no",warnings="no",stderr="none",exportprmfile=NA,showfile=NA,Model="item",
+                      fit="no",warnings="no",nodes=15,converge="0.0001",stderr="none",exportprmfile=NA,showfile=NA,Model="item",
                       importprmfile=NA){
   res<-c("reset;")
   res<-c(res,paste("Datafile ",datafile,";",sep=""))
@@ -28,7 +28,7 @@ CreateCCmds<-function(datafile,GroupNames=NULL,Positions=NULL,responses,constrai
   
   res<-c(res,paste("set ","constraints=",constraints,", ","warnings=",warnings,";",sep=""))
   res<-c(res,paste("Model ",Model,";",sep=""))
-  res<-c(res,paste("Estimate ! ","stderr=",stderr,", fit=",fit,";",sep=""))
+  res<-c(res,paste("Estimate ! ","stderr=",stderr,", fit=",fit,", nodes=",nodes,", converge=",converge,";",sep=""))
   if (!is.na(exportprmfile)){
     res<-c(res,paste("export parameters >> ",exportprmfile,";",sep=""))
   }

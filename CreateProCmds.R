@@ -108,27 +108,34 @@ CreateProCmds<-function(ProjName,Filename,VNames){
   }
   EqualparCmd<-function(Groups,items,types,intraItems=FALSE){
     # 2014/06/28 新增intraItems參數
-    type2str<-function(type) {
-      if (type=="a") "Slope[0]"
-      else if (type=="b") "Intercept[0]"
-      else if (type=="lg") "Guessing[0]"
-      else stop("Only implement for a,b with b single")
+    # 2014/07/07 新增index
+    type2str<-function(type,index=0) {
+      if (type=="a") paste("Slope[",index,"]",sep="")
+      else if (type=="b") paste("Intercept[",index,"]",sep="")
+      else if (type=="gamma") paste("Gamma[",index,"]",sep="")
+      else if (type=="lg") paste("Guessing[",index,"]",sep="")
+      else stop("Only implement for a,b,gamma,lg")
     }
     if (intraItems==FALSE){
       for (i in seq_along(types)){
         for (j in seq_along(items)){
-          tmp<-"Equal="
-          for (k in seq_along(Groups)){
-            tmp<-paste(tmp,"(G",Groups[k],", ",VNames[items[j]],", ",type2str(types[i]),")",sep="")
-            if (k<length(Groups)) tmp<-paste(tmp,", ",sep="")
-            else tmp<-paste(tmp,";",sep="")
+          indexes<-c(0)
+          if (types[i]=="b" || types[i]=="gamma") indexes<-0:(Ks[items[j]]-2)
+          for (index in indexes) {
+            tmp<-"Equal="
+            for (k in seq_along(Groups)){
+              tmp<-paste(tmp,"(G",Groups[k],", ",VNames[items[j]],", ",type2str(types[i],index),")",sep="")
+              if (k<length(Groups)) tmp<-paste(tmp,", ",sep="")
+              else tmp<-paste(tmp,";",sep="")
+            }
+            Equals<<-c(Equals,tmp)
           }
-          Equals<<-c(Equals,tmp)
         }
       }
     }  
     else {
       for (i in seq_along(types)){
+         if (types[i]!="a") stop("When intraItems==TRUE, only implement for type==\"a\"")
          if (is.null(Groups) || is.na(Groups))
            pGroups<-"("
          else
@@ -181,13 +188,31 @@ CreateProCmds<-function(ProjName,Filename,VNames){
     tmp<-""
     for (i in seq_along(items)) {
       tmp<-paste(tmp,"(",PrependGroupWithComma,VNames[items[i]],", ","Slope[0])=",anchors[[i]]$a,";",sep="")
-      if (anchors[[i]]$itemtype==3)
+      if (anchors[[i]]$itemtype==3) {
         ck<-anchors[[i]]$ck[-1]
-      else
+        model<-Models[items[i]]
+        tokens<-strsplit(model,",")[[1]]
+        if (tokens[2]=="Identity")
+          mat<-TI(Ks[items[i]])[-1,]
+        else
+          mat<-TF(Ks[items[i]])[-1,]
+        gk<- solve(mat,ck)
+        for (j in seq_along(gk))
+          tmp<-paste(tmp,"(",PrependGroupWithComma,VNames[items[i]],", ","Gamma[",j-1,"])=",gk[j],";",sep="")
+      }
+      else if (anchors[[i]]$itemtype==2){
         ck<-anchors[[i]]$ck
-      for (j in seq_along(ck))
-        tmp<-paste(tmp,"(",PrependGroupWithComma,VNames[items[i]],", ","Intercept[",j-1,"])=",ck[j],";",sep="")
-    }
+        for (j in seq_along(ck))
+          tmp<-paste(tmp,"(",PrependGroupWithComma,VNames[items[i]],", ","Intercept[",j-1,"])=",ck[j],";",sep="")
+      }
+      else if (anchors[[i]]$itemtype==1){
+        ck<-anchors[[i]]$ck
+        for (j in seq_along(ck))
+          tmp<-paste(tmp,"(",PrependGroupWithComma,VNames[items[i]],", ","Intercept[",j-1,"])=",ck[j],";",sep="")
+        tmp<-paste(tmp,"(",PrependGroupWithComma,VNames[items[i]],", ","Guessing[",j-1,"])=",anchors[[i]]$lg,";",sep="")
+     }
+      else stop("AnchorCmd only support itemtype==1,2,3")
+   }
     Anchors<<-c(Anchors,tmp)
     
   }
