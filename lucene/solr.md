@@ -105,7 +105,7 @@ java -Ddata=args -Dc=techproducts -jar example\exampledocs\post.jar "<delete><qu
 
 ```
 
-## 疑問
+## 疑問與解決
 ```
 synonyms.txt已有
 # 同形異碼
@@ -113,7 +113,11 @@ synonyms.txt已有
 林,林
 ㆙,甲
 
-片語的同義字"林妙香"可，"數學"不可，原因？可能原因：Character.isLetter(㈻)==false。所以應該利用charFilter把"㈻"轉成"學"
+用上面的同義字，檢索"\u6797妙香"可找到2007-1.pdf裡面的"\uf9f4妙香"，檢索"數學"卻找不到92matha.pdf裡面的"數㈻"，原因何在？
+
+因為用 LetterTest.java 可以得知 Character.isLetter(㈻)==false 而檢索時會先把不是letter的字元丟掉。
+
+所以應該利用 charFilter 在 index 的前面先把"㈻"轉成"學"較為穩當。
 
 ```
 ## 2015000042.pdf
