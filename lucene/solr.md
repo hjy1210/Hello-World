@@ -3,7 +3,7 @@
 
 ## 實作
 ### 一、準備新的設定 `yh`
-先將目錄 `d:\solr-7.5.0\server\solr\configsets\sample_techproducts_configs` 複製到目錄 `d:\solr-7.5.0\server\solr\configsets\yh`。接著參考 [Synonym Graph Filter](http://lucene.apache.org/solr/guide/7_5/filter-descriptions.html#filter-descriptions) 的語法說明，將新目錄裡的 conf\synonyms.txt 的尾巴增加四行
+先將目錄 `d:\solr-7.5.0\server\solr\configsets\sample_techproducts_configs` 複製到目錄 `d:\solr-7.5.0\server\solr\configsets\yh`。接著參考 [Synonym Graph Filter](http://lucene.apache.org/solr/guide/7_5/filter-descriptions.html#filter-descriptions) 的語法說明，將新目錄裡的 conf\synonyms.txt 的尾巴增加四行，看後面的說明，增加charFilter比修改synonyms.txt可靠。
 ```
 # 同形異碼
 ㈻,學
@@ -16,23 +16,26 @@
 ```
 .\bin\solr -e cloud
 ```
-執行期間，為了用 `yh` 設定集來產生新的 `AllSortOfDocuments` 文件集 。回應 `name for your new collection` 時填上 `AllSortOfDocuments`,回應 `choose a configuration for the AllSortOfDocuments collection` 時填上 `yh`。
+執行期間，為了用 `yh` 設定集來產生新的 `allsortofdocuments` 文件集 。回應 `name for your new collection` 時填上 `allsortofdocuments`,回應 `choose a configuration for the allsortofdocuments collection` 時填上 `yh`。
 
-下面做法沒法初始 SolrCloud，應了解是何緣故？
+若要手動初始 SolrCloud，可用下列指令
 ```
 md d:\yh\cloud\node1\solr
 md d:\yh\cloud\node2\solr
 copy server\solr\solr.xml d:\yh\cloud\node1\solr
 copy server\solr\solr.xml d:\yh\cloud\node2\solr
+copy server\solr\zoo.cfg d:\yh\cloud\node1\solr
+copy server\solr\zoo.cfg d:\yh\cloud\node2\solr
 .\bin\solr.cmd start -c -p 8983 -s d:\yh\cloud\node1\solr
 .\bin\solr.cmd start -c -p 7574 -s d:\yh\cloud\node2\solr -z localhost:9983
+bin\solr create -c allsortofdocuments -d server\solr\configsets\yh -s 2 -rf 2
 ```
 
 
 ### 三、用 PostTool 為文件集加入文件
-AllSortOfDocuments文件集已經採用 yh設定集，用下列指令將 d:\AllSortOfDocuments 裡面的檔案萃取資料變成文件加入文件集。
+allsortofdocuments文件集已經採用 yh設定集，用下列指令將 d:\allsortofdocuments 裡面的檔案萃取資料變成文件加入文件集。
 ```
-java -jar -Dc=AllSortOfDocuments -Dauto -Drecursive=yes example\exampledocs\post.jar d:\AllSortOfDocuments
+java -jar -Dc=allsortofdocuments -Dauto -Drecursive=yes example\exampledocs\post.jar d:\allsortofdocuments
 ```
 post.jar 的語法可用下列指令來了解
 ```
@@ -87,11 +90,11 @@ java -jar -Dc=films -Dauto example\exampledocs\post.jar example\films\*.json
 
 後續必須蒐集更多的同形異碼字，用上面的方法來轉換比用synonyms.txt更穩當。
 
-接著必須把 AllSortOfDocuments 重新索引
+接著必須把 allsortofdocuments 重新索引
 ```
-bin\solr delete -c AllSortOfDocuments
-bin\solr create -c AllSortOfDocuments -d server\solr\configsets\yh -s 2 -rf 2
-java -jar -Dc=AllSortOfDocuments -Dauto -Drecursive=yes example\exampledocs\post.jar d:\AllSortOfDocuments
+bin\solr delete -c allsortofdocuments
+bin\solr create -c allsortofdocuments -d server\solr\configsets\yh -s 2 -rf 2
+java -jar -Dc=allsortofdocuments -Dauto -Drecursive=yes example\exampledocs\post.jar d:\allsortofdocuments
 
 ```
 ### 八、雜項
@@ -122,5 +125,3 @@ synonyms.txt已有
 ```
 ## 2015000042.pdf
 2015000042.pdf 需要用FontPack1900820071_XtdAlf_Lang_DC.msi安裝字形才能閱覽。
-
-\uf9f4妙香研究員\u6797妙香ㆴ
