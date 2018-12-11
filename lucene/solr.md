@@ -84,7 +84,7 @@ Solr 是個搜尋伺服器
 
 上面產生的兩個node的位置為 example\cloud\node1 與 example\cloud\node2。
 
-若要手動初始 SolrCloud，將node的位置放在 d:\yh\cloud\node1\sol與d:\yh\cloud\node2\solr 並產生 allsortofdocuments文件集，可用下列指令
+若要手動初始 SolrCloud，將node的位置放在 d:\yhcloud\node1\solr與d:\yhcloud\node2\solr 並產生 allsortofdocuments文件集，可用下列指令
 ```
 md d:\yhcloud\node1\solr
 md d:\yhcloud\node2\solr
@@ -115,8 +115,8 @@ bin\solr stop -all
 ### 五、重啟 Solr
 用下列指令中心啟動 Solr
 ```
-.\bin\solr start -c -p 8983 -s d:\yh\cloud\node1\solr
-.\bin\solr start -c -p 7574 -s d:\yh\cloud\node2\solr -z localhost:9983
+.\bin\solr start -c -p 8983 -s d:\yhcloud\node1\solr
+.\bin\solr start -c -p 7574 -s d:\yhcloud\node2\solr -z localhost:9983
 ```
 ### 六、新增使用指定設定集的文件集
 用下列指令新增使用 sample_techproducts_configs 設定集的 techproducts 文件集，並將 exampleDocs 目錄裡的檔案匯入
@@ -182,7 +182,7 @@ solr 提供 RESTfull 服務，若寫網站利用 solr 當後台，必須讓 solr
 
 * simple-vue 專案用單純的 Vue 寫介面，以 Solr 當後臺，可以用 Chrome/Edge 進行查詢。
 因為裡面用到 axios 套件，它利用 Promise 而IE 11 並不支援 Promise，所以無法使用 IE 11 進行查詢。
-* yhvue 專案用Vue搭配 Webpack, Babel 寫介面，支援 Chrome/Edge/IE11/...。yhvue用到許多TCP阜，
+* yhvue 使用@vue/cli工具，用 vue create 起始專案，搭配 Webpack, Babel 寫介面，支援 Chrome/Edge/IE11/...。yhvue用到許多TCP阜，
 用9124提供介面、9001提供檔案、8983,7574,9983提供solr支援。
 
 ### 雜項
