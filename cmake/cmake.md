@@ -58,3 +58,39 @@ cmake .
 並產生一大堆檔案。 
 
 cmake 知道電腦中有 VS 2017，自動產生供 VS2017 使用的 Tutorial.sln，後面就可交給 VS2017了。
+
+# A CMake tutorial for Visual C++ developers
+這篇[A CMake tutorial for Visual C++ developers](https://www.codeproject.com/Articles/1181455/%2FArticles%2F1181455%2FA-CMake-tutorial-for-Visual-Cplusplus-developers)對初學者很有用，示範了執行檔、動態連結、靜態連結。
+
+學了之後，做了一個簡單的迷你例子。
+
+(1). 假設工作目錄為 cmakedemo，製造子目錄 src
+
+(2). 在 src 裡面放 CMakeLists.txt 與 helloworld.cpp 兩檔案。 CMakeLists.txt 的內容如下：
+```
+cmake_minimum_required (VERSION 2.6)
+project (Tutorial)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
+add_executable(Tutorial helloworld.cpp)
+```
+helloworld.cpp 的內容如下：
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+int main ()
+{
+  double inputValue = atof("7");
+  double outputValue = sqrt(inputValue);
+  fprintf(stdout,"The square root of %g is %g\n",
+          inputValue, outputValue);
+  char c;
+  scanf("%c", &c);
+  return 0;
+}
+```
+(3). 開啟 Visual Studio 2017，`File > Open > Directory > 選取 cmakedemo\src 資料夾`，VS 2017 就進行了 CMakeLists.txt 交代的工作。
+
+此時，VS 2017選單中多出了 CMake選蛋，選取 `CMake > 全部建置`，會在 cmakedemo\bin 產生執行檔 tutorial.exe。
+
+工具列上 `選取啟動項目 > Tutorial.exe`，再按執行就可執行程式。
