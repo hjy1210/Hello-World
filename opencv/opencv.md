@@ -4,6 +4,20 @@ OpenCV (Open Source Computer Vision Library) is released under a BSD license and
 * [OpenCV Tutorials](https://docs.opencv.org/master/d9/df8/tutorial_root.html)
 * [OpenCV-Python Tutorials](https://docs.opencv.org/master/d6/d00/tutorial_py_root.html)
 * [OpenCV.js Tutorials](https://docs.opencv.org/master/d5/d10/tutorial_js_root.html)
+## C++ with OpenCV
+[conan.md](../cmake/conan.md) 說明 VC++ 如何與 opencv 搭配進行開發。
+
+[wxWidgets](https://www.wxwidgets.org/)可搭配VC++開發GUI 程式。[這裡](https://www.wxwidgets.org/blog/2012/08/how-to-use-294-wxmsw-binaries/)說明安裝wxWidgets的方法，節錄如下：
+* 設定環境變數wxwin到wxWidgtes解壓縮後的目錄，該目錄內有include與lib兩個子目錄
+* 在專案屬性設定 C/C++ 中
+    * 將 `$(wxwin)/include/msvc;$(wxwin)/include` 加到C++專案的 "其他 Include 目錄”，先後順序是重要的。
+    * 將 WXUSINGDLL、wxMSVC_VERSION_AUTO、_UNICODE、UNICODE 加到前置處理器定義中。
+    * 設定 C/C++ > 程式碼產生 > 執行階段程式庫 為多執行緒偵錯 DLL。
+* 在屬性設定連結器中
+    * 將 `$(wxwin)\lib\vc141_x64_dll` 加到其他程式庫目錄中
+* 將 `$(wxwin)\lib\vc141_x64_dll` 加到PATH環境變數中。
+
+
 ## Javascript+openCV
 OpenCV.js Tutorials 所需要的 opencv.js 在[這裡](https://docs.opencv.org/master/opencv.js)
 ## Python + openCV
@@ -12,6 +26,7 @@ OpenCV.js Tutorials 所需要的 opencv.js 在[這裡](https://docs.opencv.org/m
 * VsCode 安裝 Python extension for Visual Studio Code 插件
 * VsCode 用 ctrl+shift+P > python:選擇直譯器，這會保存在 .vscode/settings.json 裡面。
 * Vscode 用 ctrl+shift+P > Select default shell  選擇 cmd 當作 shell
+* 用 [wxPython](https://wxpython.org/)可開發GUI程式
 
 ## template match - javascript
 [OpenCV.js Tutorials > Image Processing > Template Matching](https://docs.opencv.org/master/d8/dd1/tutorial_js_template_matching.html) 示範了模板辨識，是一個簡單的辨識物體功能。本例只考慮平移，若再考慮陰影、光線、旋轉、伸縮等問題，就變得複雜許多，但也變得很有用。
