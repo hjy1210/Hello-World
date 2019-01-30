@@ -1,0 +1,87 @@
+[settings]
+    arch=x86_64
+    build_type=Debug
+    compiler=Visual Studio
+    compiler.runtime=MDd
+    compiler.version=15
+    os=Windows
+
+[requires]
+    opencv/4.Y.Z
+    wxwidgets/3.Y.Z
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    arch_build=x86_64
+    build_type=Debug
+    compiler=Visual Studio
+    compiler.runtime=MDd
+    compiler.version=15
+    os=Windows
+    os_build=Windows
+
+[full_requires]
+    expat/2.2.5@bincrafters/stable:8cf01e2f50fcd6b63525e70584df0326550364e1
+    jasper/2.0.14@conan/stable:78d8505b0977f10821c001074d3304c25671ea72
+    libjpeg/9c@bincrafters/stable:8cf01e2f50fcd6b63525e70584df0326550364e1
+    libpng/1.6.34@bincrafters/stable:009a50ddeb47afbc9361cbc63650560c127e1234
+    libtiff/4.0.9@bincrafters/stable:009a50ddeb47afbc9361cbc63650560c127e1234
+    libwebp/1.0.0@bincrafters/stable:cc3ca8804df71811388ba344bb754fcfc3a6d540
+    opencv/4.0.0@conan/stable:ca2e5e9eea346f7a652a01872a2b97e40051303e
+    openexr/2.3.0@conan/stable:5b897370b869bd0a8fb2a9960ac8725942daf889
+    wxwidgets/3.1.1@bincrafters/stable:43c69c8eb8b1b7efc156ff83c364aec9ae749cc7
+    zlib/1.2.11@conan/stable:8cf01e2f50fcd6b63525e70584df0326550364e1
+
+[full_options]
+    expat:shared=False
+    jasper:shared=False
+    libjpeg:shared=False
+    libpng:shared=False
+    libtiff:shared=False
+    libwebp:near_lossless=True
+    libwebp:shared=False
+    libwebp:swap_16bit_csp=False
+    libwebp:with_simd=True
+    opencv:contrib=False
+    opencv:jasper=True
+    opencv:jpeg=True
+    opencv:openexr=True
+    opencv:png=True
+    opencv:shared=False
+    opencv:tiff=True
+    opencv:webp=True
+    openexr:namespace_versioning=True
+    openexr:shared=False
+    wxwidgets:aui=True
+    wxwidgets:compatibility=3.0
+    wxwidgets:debugreport=True
+    wxwidgets:expat=expat
+    wxwidgets:html=True
+    wxwidgets:jpeg=libjpeg
+    wxwidgets:mediactrl=False
+    wxwidgets:opengl=True
+    wxwidgets:png=libpng
+    wxwidgets:propgrid=True
+    wxwidgets:ribbon=True
+    wxwidgets:richtext=True
+    wxwidgets:secretstore=True
+    wxwidgets:shared=False
+    wxwidgets:sockets=True
+    wxwidgets:stc=True
+    wxwidgets:tiff=libtiff
+    wxwidgets:unicode=True
+    wxwidgets:webview=True
+    wxwidgets:xml=True
+    wxwidgets:xrc=True
+    wxwidgets:zlib=zlib
+    zlib:minizip=False
+    zlib:shared=False
+
+[recipe_hash]
+
+
+[env]
+
